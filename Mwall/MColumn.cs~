@@ -1,0 +1,80 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Effects;
+
+namespace Mwall
+{
+    class MColumn
+    {
+        string textSet; // the possible char set that appear in the column
+        Point startPoint; // the starting point coordination on the screen
+        Single fontSize;
+        int verticalDist; // the space between two characters vertically
+        int tickCount; // the update frequency of this column
+        int intervalCount; // the counter for frequency control
+        int len; // how many characters to be shown simultaneously
+        int cursor; // the cursor for which label is at the bottom of the column
+        Canvas canv; // store the canvas where the labels to be drawn
+        static Random rd = new Random();
+        Label[] lbArr; // the label array
+        double[] opacityArr; // control the opacity for each label in the column
+
+        public MColumn(string textStr, Point StartPoint, Single FontSize, int LenCount, int VerticalDistance, int interval, Canvas BackgroundCanvas)
+        {
+            textSet = textStr;
+            startPoint = StartPoint;
+            fontSize = FontSize;
+            len = LenCount;
+            verticalDist = VerticalDistance;
+            intervalCount = interval;
+            canv = BackgroundCanvas;
+            cursor = len - 1;
+            tickCount = 0;
+
+            opacityArr = new double[len];
+            double opaDelta = 1f / len;
+            for (int i = 0; i < len; i++)
+                opacityArr[i] = (i + 1) * opaDelta;
+
+            lbArr = new Label[len];
+            for (int i = 0; i < len; i++)
+            {
+                Label l = new Label();
+                l.Content = textSet.Substring(rd.Next(textSet.Length),1);
+                l.FontSize = fontSize;
+                l.Foreground = new SolidColorBrush(Colors.ForestGreen);
+                BlurEffect b = new BlurEffect();
+                b.Radius = 2;
+                l.Effect = b;
+                l.Opacity = opacityArr[i];
+                l.Margin = new Thickness(startPoint.X, startPoint.Y + i * verticalDist, 0, 0);
+                BackgroundCanvas.Children.Add(l);
+                lbArr[i] = l;
+            }
+        }
+
+        public int Draw()
+        {
+            tickCount++;
+            if (0 != tickCount % intervalCount) return 0;
+
+            cursor = (cursor + 1) % 4;
+            for(int j = 0; j < 4; j++)
+            {
+                int i = (cursor + j) % 4;
+                Label clb = lbArr[i];
+                clb.Opacity = opacityArr[j];
+                if(3 == j) clb.Content = textSet.Substring(rd.Next(textSet.Length),1);
+                clb.Margin = new Thickness(startPoint.X, startPoint.Y + (tickCount / intervalCount + j) * verticalDist, 0, 0);
+
+            }
+            return 0;
+        }
+    }
+}

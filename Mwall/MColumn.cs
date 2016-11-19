@@ -20,7 +20,7 @@ namespace Mwall
         int scrHeight; // the screen's height in pixel
         int columnHeight; // the column's height is screen height + current displaying text's (labels') height
 
-        int tickCount; // the update frequency of this column
+        //int tickCount; // the update frequency of this column
         int intervalCount; // the counter for frequency control
         int len; // how many characters to be shown simultaneously
         int cursor; // the cursor for which label is at the bottom of the column
@@ -36,19 +36,6 @@ namespace Mwall
             "abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-=_+", "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
             "abcdefghijklmnopqrstuvwxyz0123456789{}[]\\|<>?/~", "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789{}[]\\|<>?/~",
             "!@#$%^&*()-=_+", "{}[]\\|<>?/~", "0123456789!@#$%^&*()-=_+{}[]\\|<>?/~"};
-
-        //static int GetGCD(int num1, int num2)
-        //{
-        //    while (num1 != num2)
-        //    {
-        //        if (num1 > num2) num1 = num1 - num2;
-        //        if (num2 > num1) num2 = num2 - num1;
-        //    }
-        //    return num1;
-        //}
-        //static int GetLCM(int num1, int num2) { return (num1 * num2) / GetGCD(num1, num2); }
- 
-
  
 
         public MColumn(string textStr, Point StartPoint, Single FontSize, int VerticalDistance, int screenHeight, int LenCount, int interval, Canvas BackgroundCanvas)
@@ -66,7 +53,7 @@ namespace Mwall
             intervalCount = interval;
             canv = BackgroundCanvas;
             cursor = len - 1;
-            tickCount = 0;
+            //tickCount = 0;
 
             opacityArr = new double[len];
             double opaDelta = 1f / len;
@@ -95,8 +82,8 @@ namespace Mwall
         public int Draw()
         {
             //tickCount++;
-            if (++tickCount < intervalCount) return 0;
-            tickCount = 0;
+            //if (++tickCount < intervalCount) return 0;
+            //tickCount = 0;
             //if (0 != tickCount % intervalCount) return 0;
 
             cursor = (cursor + 1) % len;

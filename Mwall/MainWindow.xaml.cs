@@ -26,35 +26,18 @@ namespace Mwall
     public partial class MainWindow : Window
     {
         private DispatcherTimer refreshTimer = new DispatcherTimer();
-        private List<MColumn> columnList = new List<MColumn>();
+        //private List<MColumn> columnList = new List<MColumn>();
+        private MScreen mscreen;
 
         const int SUPPOSED_COLUMN_WIDTH = 25;
 
         public MainWindow()
         {
             InitializeComponent();
-            //Rectangle rect = Screen.PrimaryScreen.Bounds;
-            int width = Convert.ToInt32(System.Windows.SystemParameters.PrimaryScreenWidth);
-            int height = Convert.ToInt32(System.Windows.SystemParameters.PrimaryScreenHeight);
-            //int height = System.Windows.Forms.SystemInformation.VirtualScreen.Height;
-            //MessageBox.Show(height.ToString());
-            //Screen.FromControl(BackCanv);
-            //ScrHeight = height;
 
-            for(int i = 0; i < width/SUPPOSED_COLUMN_WIDTH; i++)
-            {
-                string str = MColumn.PRETEXT[MColumn.rd.Next(MColumn.PRETEXT.Length)];
-                int startingX = i * SUPPOSED_COLUMN_WIDTH + MColumn.rd.Next(SUPPOSED_COLUMN_WIDTH) - SUPPOSED_COLUMN_WIDTH *2 / 3;
-                int verticalGap = MColumn.rd.Next(10);
-                int rndinterval = MColumn.rd.Next(8);
-                int rndlen = MColumn.rd.Next(12) + 5;
-                columnList.Add(new MColumn(str, new Point(startingX, 0), 20, 20 + verticalGap, height, rndlen, rndinterval, BackCanv));
-            } 
-            
-
-            //columnList.Add(new MColumn("abcdefghijklmnopqrstuvwxyz", new Point(200, 0), 20, 20, height, 9, 1, BackCanv));
-            //columnList.Add(new MColumn("0123456789", new Point(100, 0), 20, 20, height, 8, 3, BackCanv));
-
+            mscreen = new MScreen(BackCanv);
+            mscreen.GenerateDistributedColumn();
+             
             refreshTimer = new System.Windows.Threading.DispatcherTimer();
             refreshTimer.Tick += new EventHandler(dispatcherTimer_Tick);
             refreshTimer.Interval = new TimeSpan(0, 0, 0, 0, 800);
@@ -77,11 +60,7 @@ namespace Mwall
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-            //Debug.WriteLine("Ticking");
-            foreach (MColumn col in columnList)
-            {
-                col.Draw();
-            }
+            mscreen.Draw();
         }
 
     }

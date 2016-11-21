@@ -8,14 +8,22 @@ using System.Windows.Controls;
 
 namespace Mwall
 {
+    /// <summary>
+    /// It represents the display screen of the monitor, currently only supports the main screen of the PC.
+    /// MScreen also hold the references of the MColumn which need to be updated (or draw) on specific "tick".
+    /// </summary>
     class MScreen
     {
-        public const int MAX_CYCLE = 50;
+        public const int MAX_CYCLE = 100;
         public List<MColumn>[] ArrCycleList = new List<MColumn>[MAX_CYCLE];
         private int width, height;
         private Canvas canv;
-        private int cur;
+        private int cur; // the ticking cursor
 
+        /// <summary>
+        /// Default constructor 
+        /// </summary>
+        /// <param name="canvas">the canvas to be drawn on</param>
         public MScreen(Canvas canvas)
         {
             width = Convert.ToInt32(System.Windows.SystemParameters.PrimaryScreenWidth);
@@ -31,17 +39,14 @@ namespace Mwall
 
             for(int i = 0; i < width/SUPPOSED_COLUMN_WIDTH; i++)
             {
-                string str = MColumn.PRETEXT[MColumn.rd.Next(MColumn.PRETEXT.Length)];
-                int startingX = i * SUPPOSED_COLUMN_WIDTH + MColumn.rd.Next(SUPPOSED_COLUMN_WIDTH) - SUPPOSED_COLUMN_WIDTH *2 / 3;
-                int verticalGap = MColumn.rd.Next(10);
-                int rndinterval = MColumn.rd.Next(8) + 1;
-                int rndlen = MColumn.rd.Next(12) + 5;
-                MColumn mc = new MColumn(str, new Point(startingX, 0), 20, 20 + verticalGap, height, rndlen, rndinterval, canv);
+                string str = MColumnCls.PRETEXT[MColumnCls.rd.Next(MColumnCls.PRETEXT.Length)];
+                int startingX = i * SUPPOSED_COLUMN_WIDTH + MColumnCls.rd.Next(SUPPOSED_COLUMN_WIDTH) - SUPPOSED_COLUMN_WIDTH *2 / 3;
+                int verticalGap = MColumnCls.rd.Next(10);
+                int rndinterval = MColumnCls.rd.Next(8) + 1;
+                int rndlen = MColumnCls.rd.Next(12) + 5;
+                MColumn mc = new MColumnCls(str, new Point(startingX, 0), 20, 20 + verticalGap, height, rndlen, canv);
                 for(int j = 1; j < MAX_CYCLE; j++) 
                     if (0 == j % rndinterval) ArrCycleList[j].Add(mc);
-
-                //ArrCycleList[rndinterval].Add(new MColumn(str, new Point(startingX, 0), 20, 20 + verticalGap, height, rndlen, rndinterval, BackCanv));
-                //columnList.Add(new MColumn(str, new Point(startingX, 0), 20, 20 + verticalGap, height, rndlen, rndinterval, BackCanv));
             } 
             
 

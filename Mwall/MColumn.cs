@@ -7,55 +7,80 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
+using System.Diagnostics;
 
 namespace Mwall
 {
     interface MColumn
     {
+       
         int Draw();
 
     }
-    class MColumnCls : MColumn
+
+    abstract class MColumnBase : MColumn
     {
-        string textSet; // the possible char set that appear in the column
-        Point startPoint; // the starting point coordination on the screen
-        Single fontSize; 
-        int verticalDist; // the space between two characters vertically
-
-        int scrHeight; // the screen's height in pixel
-        int columnHeight; // the column's height is screen height + current displaying text's (labels') height
-
-        //int tickCount; // the update frequency of this column
-        //int intervalCount; // the counter for frequency control
-        int len; // how many characters to be shown simultaneously
-        int cursor; // the cursor for which label is at the bottom of the column
-        Canvas canv; // store the canvas where the labels to be drawn
-        public static Random rd = new Random();
-        Label[] lbArr; // the label array
-        double[] opacityArr; // control the opacity for each label in the column
-        //static int lcmHeight = 1;
-
         public static string[] PRETEXT = new string[] { "01", "0123456789",
             "abcdefghijklmnopqrstuvwxyz", "ABCDEFGHIJKLMNOPQRSTUVWXYZ",  
             "abcdefghijklmnopqrstuvwxyz0123456789", "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
             "abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-=_+", "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
             "abcdefghijklmnopqrstuvwxyz0123456789{}[]\\|<>?/~", "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789{}[]\\|<>?/~",
             "!@#$%^&*()-=_+", "{}[]\\|<>?/~", "0123456789!@#$%^&*()-=_+{}[]\\|<>?/~"};
- 
+        public static Random rd = new Random();
 
-        public MColumnCls(string textStr, Point StartPoint, Single FontSize, int VerticalDistance, int screenHeight, int LenCount, Canvas BackgroundCanvas)
+        protected string textSet; // the possible char set that appear in the column
+        protected Point startPoint; // the starting point coordination on the screen
+        protected double scrHeight; // the screen's height in pixel
+        protected float fontSize; 
+        protected Canvas canv; // store the canvas where the labels to be drawn
+
+        protected MColumnBase(Point StartPoint, float FontSize, double ScreenHeight, Canvas BackgroundCanvas, string TextSet)
         {
-            textSet = textStr;
+            textSet = TextSet;
             startPoint = StartPoint;
             fontSize = FontSize;
-            len = LenCount;
-            verticalDist = VerticalDistance;
-
-            scrHeight = screenHeight;
-            columnHeight = screenHeight + verticalDist * len;
-
-            //intervalCount = interval;
+            scrHeight = ScreenHeight;
             canv = BackgroundCanvas;
+        }
+
+        public abstract int Draw();
+    }
+
+    class MColumnCls : MColumnBase
+    {
+        //string textSet; // the possible char set that appear in the column
+        //Point startPoint; // the starting point coordination on the screen
+        //Single fontSize; 
+        int verticalDist; // the space between two characters vertically
+
+        //int scrHeight; // the screen's height in pixel
+        double columnHeight; // the column's height is screen height + current displaying text's (labels') height
+
+        ////int tickCount; // the update frequency of this column
+        ////int intervalCount; // the counter for frequency control
+        int len; // how many characters to be shown simultaneously
+        int cursor; // the cursor for which label is at the bottom of the column
+        //Canvas canv; // store the canvas where the labels to be drawn
+        //public static Random rd = new Random();
+        Label[] lbArr; // the label array
+        double[] opacityArr; // control the opacity for each label in the column
+        //static int lcmHeight = 1;
+
+        //public static string[] PRETEXT = new string[] { "01", "0123456789",
+        //    "abcdefghijklmnopqrstuvwxyz", "ABCDEFGHIJKLMNOPQRSTUVWXYZ",  
+        //    "abcdefghijklmnopqrstuvwxyz0123456789", "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+        //    "abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-=_+", "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+        //    "abcdefghijklmnopqrstuvwxyz0123456789{}[]\\|<>?/~", "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789{}[]\\|<>?/~",
+        //    "!@#$%^&*()-=_+", "{}[]\\|<>?/~", "0123456789!@#$%^&*()-=_+{}[]\\|<>?/~"};
+ 
+
+        public MColumnCls(Point StartPoint, float FontSize, double ScreenHeight, Canvas BackgroundCanvas, string TextSet, int LenCount, int VerticalDistance = 0)
+            : base(StartPoint, FontSize, ScreenHeight, BackgroundCanvas, TextSet)
+        {
+            len = LenCount;
+            //if(0 == VerticalDistance)
+            verticalDist = (0 == VerticalDistance) ? (int)Math.Ceiling(FontSize): VerticalDistance;
+            columnHeight = ScreenHeight + VerticalDistance * len;
             cursor = len - 1;
 
             opacityArr = new double[len];
@@ -80,7 +105,7 @@ namespace Mwall
             }
         }
 
-        public int Draw()
+        public override int Draw()
         {
             cursor = (cursor + 1) % len;
             Label mlb = lbArr[cursor];
@@ -99,6 +124,97 @@ namespace Mwall
                 //if(3 == j) clb.Content = textSet.Substring(rd.Next(textSet.Length),1);
                 //clb.Margin = new Thickness(startPoint.X, startPoint.Y + (tickCount / intervalCount + j) * verticalDist, 0, 0);
 
+            }
+            return 0;
+        }
+    }
+
+
+    class MColumnVert : MColumnBase
+    {
+        enum State
+        {
+            Dropping, Fading, Silence
+        }
+
+        State state;
+
+        double[] opacityArr; // controls the opacity of the column when it reaches bottom
+        int counter;
+        int silenceTurn;
+        int fadingTurn;
+
+        Label label;
+        //double curHeight; // the label's bottom height
+
+        public MColumnVert(Point StartPoint, float FontSize, double ScreenHeight, Canvas BackgroundCanvas, string TextSet, int FadingTurn = 8, int SilenceTurn = 4)
+            : base(StartPoint, FontSize, ScreenHeight, BackgroundCanvas, TextSet)
+        {
+            fadingTurn = FadingTurn;
+            silenceTurn = SilenceTurn;
+            label = new Label();
+            label.Content = textSet.Substring(rd.Next(textSet.Length),1) + Environment.NewLine;
+            label.FontSize = fontSize;
+            label.Foreground = new SolidColorBrush(Colors.ForestGreen);
+            //label.Width = fontSize;
+            label.HorizontalAlignment = HorizontalAlignment.Center;
+            label.Margin = new Thickness(startPoint.X, startPoint.Y, 0, 0);
+            BackgroundCanvas.Children.Add(label);
+            state = State.Dropping;
+            opacityArr = new double[fadingTurn];
+            double opaDelta = 1f / opacityArr.Length;
+            for (int i = 0; i < opacityArr.Length; i++)
+                opacityArr[i] = (i + 1) * opaDelta;
+            //counter = fadingTurn - 1;
+            counter = 0;
+            label.Opacity = .95;
+        }
+
+        public override int Draw()
+        {
+            if (State.Dropping == state)
+            {
+                if(counter < 0)
+                {
+                    label.Content = "";
+                    counter = 0;
+                    label.Opacity = .95;
+                }
+                if (label.ActualHeight < scrHeight)
+                {
+                    label.Content += textSet.Substring(rd.Next(textSet.Length), 1) + Environment.NewLine;
+                }
+                else
+                {
+                    state = State.Fading;
+                    counter = opacityArr.Length - 1;
+                }
+            }
+            else if (State.Fading == state)
+            {
+                if (--counter >= 0)
+                {
+                    label.Opacity = opacityArr[counter];
+                }
+                else
+                {
+                    counter = silenceTurn;
+                    state = State.Silence;
+                }
+            }
+            else if (State.Silence == state)
+            {
+                if(--counter < 0) {
+                    //counter = opacityArr.Length - 1;
+                    label.Content = textSet.Substring(rd.Next(textSet.Length), 1) + Environment.NewLine;
+                    state = State.Dropping;
+                    //counter = 0;
+                }
+            }
+            else
+            {
+                // shall not reach here
+                Debug.WriteLine("Unknown state in MColumnVert's Draw");
             }
             return 0;
         }

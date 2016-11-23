@@ -44,12 +44,28 @@ namespace Mwall
                 int verticalGap = MColumnCls.rd.Next(10);
                 int rndinterval = MColumnCls.rd.Next(8) + 1;
                 int rndlen = MColumnCls.rd.Next(12) + 5;
-                MColumn mc = new MColumnCls(str, new Point(startingX, 0), 20, 20 + verticalGap, height, rndlen, canv);
+                MColumn mc = new MColumnCls(new Point(startingX, 0), 20, height, canv, str, rndlen );
                 for(int j = 1; j < MAX_CYCLE; j++) 
                     if (0 == j % rndinterval) ArrCycleList[j].Add(mc);
             } 
             
 
+            return 0;
+        }
+
+        public int GenerateVerticalColumn()
+        {
+            int SUPPOSED_COLUMN_WIDTH = 25;
+
+            for(int i = 0; i < width/SUPPOSED_COLUMN_WIDTH; i++)
+            {
+                string str = MColumnBase.PRETEXT[MColumnBase.rd.Next(MColumnBase.PRETEXT.Length)];
+                int startingX = i * SUPPOSED_COLUMN_WIDTH + MColumnCls.rd.Next(SUPPOSED_COLUMN_WIDTH) - SUPPOSED_COLUMN_WIDTH *2 / 3;
+                int rndinterval = MColumnCls.rd.Next(4) + 1;
+                MColumn mc = new MColumnVert(new Point(startingX, 0), 20, height, canv, str);
+                for(int j = 1; j < MAX_CYCLE; j++) 
+                    if (0 == j % rndinterval) ArrCycleList[j].Add(mc);
+            } 
             return 0;
         }
 

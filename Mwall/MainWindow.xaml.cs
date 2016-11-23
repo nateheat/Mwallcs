@@ -36,7 +36,8 @@ namespace Mwall
             InitializeComponent();
 
             mscreen = new MScreen(BackCanv);
-            mscreen.GenerateDistributedColumn();
+            //mscreen.GenerateDistributedColumn();
+            mscreen.GenerateVerticalColumn();
              
             refreshTimer = new System.Windows.Threading.DispatcherTimer();
             refreshTimer.Tick += new EventHandler(dispatcherTimer_Tick);

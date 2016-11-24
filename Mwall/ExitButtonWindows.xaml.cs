@@ -23,6 +23,8 @@ namespace Mwall
         private bool bDragging = false;
         private Point pointMDown = new Point();
 
+        private const int MOUSE_MOVE_THRESHOLD = 8;
+
         public ExitButtonWindows()
         {
             InitializeComponent();
@@ -50,7 +52,7 @@ namespace Mwall
         private void ExitButtonWindow_MouseMove(object sender, MouseEventArgs e)
         {
             if (!bMLeftPressed || MouseButtonState.Pressed != e.LeftButton) return;
-            if (Math.Abs(e.GetPosition(this).X - pointMDown.X) + Math.Abs(e.GetPosition(this).Y - pointMDown.Y) > 4)
+            if (Math.Abs(e.GetPosition(this).X - pointMDown.X) + Math.Abs(e.GetPosition(this).Y - pointMDown.Y) > MOUSE_MOVE_THRESHOLD)
             {
                 bDragging = true;
                 DragMove();

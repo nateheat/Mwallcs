@@ -63,7 +63,7 @@ namespace Mwall
             {
                 string str = MColumnBase.PRETEXT[MColumnBase.rd.Next(MColumnBase.PRETEXT.Length)];
                 int startingX = i * SUPPOSED_COLUMN_WIDTH + MColumnCls.rd.Next(SUPPOSED_COLUMN_WIDTH) - SUPPOSED_COLUMN_WIDTH *2 / 3;
-                int rndinterval = MColumnCls.rd.Next(4) + 1;
+                int rndinterval = MColumnCls.rd.Next(9) + 1;
                 MColumn mc = new MColumnVert(new Point(startingX, 0), 12, height, canv, str);
                 for(int j = 1; j < MAX_CYCLE; j++) 
                     if (0 == j % rndinterval) ArrCycleList[j].Add(mc);

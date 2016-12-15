@@ -35,9 +35,11 @@ namespace Mwall
             cur = 0;
         }
 
-        public int GenerateDistributedColumn()
+        public int GenerateCometColumns()
         {
-            int SUPPOSED_COLUMN_WIDTH = 14;
+            //int SUPPOSED_COLUMN_WIDTH = 14;
+            float fsize = MConfig.GetInstance().FSize;
+            int SUPPOSED_COLUMN_WIDTH = (int)Math.Ceiling(fsize) + 5;
 
             for(int i = 0; i < width/SUPPOSED_COLUMN_WIDTH; i++)
             {
@@ -46,7 +48,7 @@ namespace Mwall
                 int verticalGap = MColumnCls.rd.Next(10);
                 int rndinterval = MColumnCls.rd.Next(8) + 1;
                 int rndlen = MColumnCls.rd.Next(12) + 5;
-                MColumn mc = new MColumnCls(new Point(startingX, 0), 12, height, canv, str, rndlen );
+                MColumn mc = new MColumnCls(new Point(startingX, 0), fsize, height, canv, str, rndlen );
                 for(int j = 1; j < MAX_CYCLE; j++) 
                     if (0 == j % rndinterval) ArrCycleList[j].Add(mc);
             } 
@@ -55,16 +57,18 @@ namespace Mwall
             return 0;
         }
 
-        public int GenerateVerticalColumn()
+        public int GenerateStraightColumns()
         {
-            int SUPPOSED_COLUMN_WIDTH = 14;
+            //int SUPPOSED_COLUMN_WIDTH = 14;
+            float fsize = MConfig.GetInstance().FSize;
+            int SUPPOSED_COLUMN_WIDTH = (int)Math.Ceiling(fsize) + 5;
 
             for(int i = 0; i < width/SUPPOSED_COLUMN_WIDTH; i++)
             {
                 string str = MColumnBase.PRETEXT[MColumnBase.rd.Next(MColumnBase.PRETEXT.Length)];
                 int startingX = i * SUPPOSED_COLUMN_WIDTH + MColumnCls.rd.Next(SUPPOSED_COLUMN_WIDTH) - SUPPOSED_COLUMN_WIDTH *2 / 3;
                 int rndinterval = MColumnCls.rd.Next(9) + 1;
-                MColumn mc = new MColumnVert(new Point(startingX, 0), 12, height, canv, str);
+                MColumn mc = new MColumnVert(new Point(startingX, 0), fsize, height, canv, str);
                 for(int j = 1; j < MAX_CYCLE; j++) 
                     if (0 == j % rndinterval) ArrCycleList[j].Add(mc);
             } 

@@ -35,9 +35,20 @@ namespace Mwall
         {
             InitializeComponent();
 
+            MConfig mcf = MConfig.GetInstance();
+
             mscreen = new MScreen(BackCanv);
-            //mscreen.GenerateDistributedColumn();
-            mscreen.GenerateVerticalColumn();
+            switch (mcf.Style)
+            {
+                case MWStyle.Comet:
+                    mscreen.GenerateCometColumns();
+                    break;
+                case MWStyle.Straight:
+                    mscreen.GenerateStraightColumns();
+                    break;
+                default:
+                    break;
+            }
              
             refreshTimer = new System.Windows.Threading.DispatcherTimer();
             refreshTimer.Tick += new EventHandler(dispatcherTimer_Tick);
@@ -66,6 +77,9 @@ namespace Mwall
 
     }
 
+    /// <summary>
+    /// provide the API for allowing click through of the window
+    /// </summary>
     public static class WindowsServices
     {
       const int WS_EX_TRANSPARENT = 0x00000020;

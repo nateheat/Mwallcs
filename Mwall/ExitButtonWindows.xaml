@@ -5,9 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Mwall"
         mc:Ignorable="d"
-        Title="ExitButtonWindows" Height="27.586" Width="47.382" Topmost="True" ResizeMode="NoResize" WindowStyle="None" Opacity="0.6" MouseLeftButtonDown="ExitButtonWindow_MouseLeftButtonDown" MouseLeftButtonUp="ExitButtonWindow_MouseLeftButtonUp" MouseMove="ExitButtonWindow_MouseMove">
-    <Grid Margin="0,0,43,22">
-        <Label x:Name="label" Content="Exit" HorizontalAlignment="Left" Height="50" VerticalAlignment="Top" Width="49" FontSize="24" Margin="0,-8,-42,-30"/>
+        Title="ExitButtonWindows" Height="42.586" Width="60.081" Topmost="True" ResizeMode="NoResize" WindowStyle="None" Opacity="0.6" MouseLeftButtonDown="ExitButtonWindow_MouseLeftButtonDown" MouseLeftButtonUp="ExitButtonWindow_MouseLeftButtonUp" MouseMove="ExitButtonWindow_MouseMove" Background="{x:Null}" AllowsTransparency="True" MouseRightButtonUp="ExitButtonWindow_MouseRightButtonUp">
+    <Grid Margin="7,8,8,8">
+        <Canvas Background="Black" Opacity="0.5" Margin="-4,-3,-5,-3">
+            <Canvas.Effect>
+                <BlurEffect/>
+            </Canvas.Effect>
+        </Canvas>
 
+        <Label x:Name="label" HorizontalAlignment="Left" Height="52" VerticalAlignment="Top" Width="62" FontSize="30" Margin="-5,-14,-12,-11" Foreground="#FF68F127" Background="{x:Null}" >
+            <Label.Effect>
+                <BlurEffect Radius="3"/>
+            </Label.Effect>
+            Exit
+        </Label>
     </Grid>
 </Window>

@@ -6,13 +6,25 @@
         xmlns:local="clr-namespace:Mwall"
         mc:Ignorable="d"
         Title="OptionForm" Height="300" Width="482.967">
-    <Grid>
+    <Window.Resources>
+        <local:EBConverter x:Key="syConverter" />
+    </Window.Resources>
+    <Grid x:Name="MainGrid">
         <GroupBox x:Name="groupBox" Header="Column Style" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="102" Width="158">
             <StackPanel>
-            <RadioButton x:Name="radioButtonStraight" Content="Straight" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-            <RadioButton x:Name="radioButtonComet" Content="Comet" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+            <RadioButton x:Name="radioButtonStraight" Content="Straight" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" IsChecked="{Binding Path=Style, Converter={StaticResource syConverter}, ConverterParameter={x:Static local:MWStyle.Straight}}"/>
+            <RadioButton x:Name="radioButtonComet" Content="Comet" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" IsChecked="{Binding Path=Style, Converter={StaticResource syConverter}, ConverterParameter={x:Static local:MWStyle.Comet}}"/>
             </StackPanel>
         </GroupBox>
+        <StackPanel Orientation="Horizontal" Margin="14,146,303,92">
+            <ComboBox x:Name="comboBoxFontSize" Width="74" Loaded="comboBoxFontSize_Loaded" SelectionChanged="comboBoxFontSize_SelectionChanged" IsEditable="false" SelectedValue="{Binding Path=FSize, Mode=TwoWay}"/>
+            <Button x:Name="cmdUp" x:FieldModifier="private" Margin="5,0,0,0" Content="˄" Width="20" Click="cmdUp_Click" />
+            <Button x:Name="cmdDown" x:FieldModifier="private"  Content="˅" Width="20" Click="cmdDown_Click" />
+        </StackPanel>
+
+        <Button x:Name="buttonOK" Content="_OK" HorizontalAlignment="Left" Margin="377,25,0,0" VerticalAlignment="Top" Width="75" Click="buttonOK_Click"/>
+        <Button x:Name="buttonCancel" Content="_Cancel" HorizontalAlignment="Left" Margin="377,60,0,0" VerticalAlignment="Top" Width="75" Click="buttonCancel_Click"/>
+        <Label x:Name="label" Content="Font Size" HorizontalAlignment="Left" Margin="10,117,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

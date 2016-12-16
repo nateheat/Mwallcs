@@ -22,19 +22,11 @@ namespace Mwall
     /// </summary>
     public partial class OptionForm : Window
     {
-        private static OptionForm _instance;
-
-        public static OptionForm GetInstance()
-        {
-            if (null == _instance)
-                _instance = new OptionForm();
-            return _instance;
-        }
-        
-        private OptionForm()
+        public OptionForm()
         {
             InitializeComponent();
             ((Grid)FindName("MainGrid")).DataContext = MConfig.GetInstance();
+
         }
 
         private void cmdUp_Click(object sender, RoutedEventArgs e)
@@ -80,8 +72,10 @@ namespace Mwall
 
         private void buttonCancel_Click(object sender, RoutedEventArgs e)
         {
+            MConfig.GetInstance().LoadConfig();
             DialogResult = false;
         }
+
     }
 
 

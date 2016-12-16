@@ -62,8 +62,7 @@ namespace Mwall
 
         private void ExitButtonWindow_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-            OptionForm opForm = OptionForm.GetInstance();
-            opForm.ShowDialog();
+            new OptionForm().ShowDialog();
         }
     }
 }

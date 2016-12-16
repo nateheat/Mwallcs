@@ -46,7 +46,7 @@ namespace Mwall
         public abstract int Draw();
     }
 
-    class MColumnCls : MColumnBase
+    class MColumnComet : MColumnBase
     {
         //string textSet; // the possible char set that appear in the column
         //Point startPoint; // the starting point coordination on the screen
@@ -74,7 +74,7 @@ namespace Mwall
         //    "!@#$%^&*()-=_+", "{}[]\\|<>?/~", "0123456789!@#$%^&*()-=_+{}[]\\|<>?/~"};
  
 
-        public MColumnCls(Point StartPoint, float FontSize, double ScreenHeight, Canvas BackgroundCanvas, string TextSet, int LenCount, int VerticalDistance = 0)
+        public MColumnComet(Point StartPoint, float FontSize, double ScreenHeight, Canvas BackgroundCanvas, string TextSet, int LenCount, int VerticalDistance = 0)
             : base(StartPoint, FontSize, ScreenHeight, BackgroundCanvas, TextSet)
         {
             len = LenCount;
@@ -166,7 +166,14 @@ namespace Mwall
             for (int i = 0; i < opacityArr.Length; i++)
                 opacityArr[i] = (i + 1) * opaDelta;
             //counter = fadingTurn - 1;
-            counter = 0;
+            int initc = rd.Next((int)Math.Round(ScreenHeight/FontSize)) / 2;
+            for (int i = 0; i < initc; i++)
+            {
+                if (label.ActualHeight > scrHeight) break;
+                label.Content += textSet.Substring(rd.Next(textSet.Length), 1) + Environment.NewLine;
+            }
+            
+            counter = initc;
             label.Opacity = .95;
         }
 

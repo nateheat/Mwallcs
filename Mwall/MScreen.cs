@@ -14,6 +14,7 @@ namespace Mwall
     /// </summary>
     class MScreen
     {
+        public static Random random = new Random();
         public const int MAX_CYCLE = 100;
         public List<MColumn>[] ArrCycleList = new List<MColumn>[MAX_CYCLE];
         private double width, height;
@@ -37,18 +38,17 @@ namespace Mwall
 
         public int GenerateCometColumns()
         {
-            //int SUPPOSED_COLUMN_WIDTH = 14;
             float fsize = MConfig.GetInstance().FSize;
-            int SUPPOSED_COLUMN_WIDTH = (int)Math.Ceiling(fsize) + 5;
+            int colWidth = (int)Math.Ceiling(fsize) + 5;
 
-            for(int i = 0; i < width/SUPPOSED_COLUMN_WIDTH; i++)
+            for(int i = 0; i < width/colWidth; i++)
             {
-                string str = MColumnCls.PRETEXT[MColumnCls.rd.Next(MColumnCls.PRETEXT.Length)];
-                int startingX = i * SUPPOSED_COLUMN_WIDTH + MColumnCls.rd.Next(SUPPOSED_COLUMN_WIDTH) - SUPPOSED_COLUMN_WIDTH *2 / 3;
-                int verticalGap = MColumnCls.rd.Next(10);
-                int rndinterval = MColumnCls.rd.Next(8) + 1;
-                int rndlen = MColumnCls.rd.Next(12) + 5;
-                MColumn mc = new MColumnCls(new Point(startingX, 0), fsize, height, canv, str, rndlen );
+                string str = MColumnBase.PRETEXT[random.Next(MColumnBase.PRETEXT.Length)];
+                int startingX = i * colWidth + random.Next(colWidth)/2 - colWidth / 4;
+                int verticalGap = random.Next(10);
+                int rndinterval = random.Next(8) + 1;
+                int rndlen = random.Next(12) + 5;
+                MColumn mc = new MColumnComet(new Point(startingX, 0), fsize, height, canv, str, rndlen );
                 for(int j = 1; j < MAX_CYCLE; j++) 
                     if (0 == j % rndinterval) ArrCycleList[j].Add(mc);
             } 
@@ -59,15 +59,14 @@ namespace Mwall
 
         public int GenerateStraightColumns()
         {
-            //int SUPPOSED_COLUMN_WIDTH = 14;
             float fsize = MConfig.GetInstance().FSize;
-            int SUPPOSED_COLUMN_WIDTH = (int)Math.Ceiling(fsize) + 5;
+            int colWidth = (int)Math.Ceiling(fsize) + 5;
 
-            for(int i = 0; i < width/SUPPOSED_COLUMN_WIDTH; i++)
+            for(int i = 0; i < width/colWidth; i++)
             {
-                string str = MColumnBase.PRETEXT[MColumnBase.rd.Next(MColumnBase.PRETEXT.Length)];
-                int startingX = i * SUPPOSED_COLUMN_WIDTH + MColumnCls.rd.Next(SUPPOSED_COLUMN_WIDTH) - SUPPOSED_COLUMN_WIDTH *2 / 3;
-                int rndinterval = MColumnCls.rd.Next(9) + 1;
+                string str = MColumnBase.PRETEXT[random.Next(MColumnBase.PRETEXT.Length)];
+                int startingX = i * colWidth + random.Next(colWidth)/2 - colWidth / 4;
+                int rndinterval = random.Next(9) + 1;
                 MColumn mc = new MColumnVert(new Point(startingX, 0), fsize, height, canv, str);
                 for(int j = 1; j < MAX_CYCLE; j++) 
                     if (0 == j % rndinterval) ArrCycleList[j].Add(mc);

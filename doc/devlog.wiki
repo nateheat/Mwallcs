@@ -1,0 +1,17 @@
+== Change List ==
+
+Matrix C# version
+
+=== 12/16/2016 ===
+
+Branch: feat-verticalTB
+Refactor MColumnCls to MColumnComet
+Refactor MColumnVert to MColumnStraight
+
+
+=== 12/18/2016 ===
+
+Branch: master
+Add the devlog.wiki to ./doc/
+
+

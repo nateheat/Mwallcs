@@ -11,11 +11,12 @@ using System.Diagnostics;
 
 namespace Mwall
 {
-    interface MColumn
+    internal interface MColumn
     {
        
         int Draw();
 
+        //bool Clean();
     }
 
     abstract class MColumnBase : MColumn
@@ -44,6 +45,7 @@ namespace Mwall
         }
 
         public abstract int Draw();
+        //public abstract int Clean();
     }
 
     class MColumnComet : MColumnBase
@@ -104,6 +106,11 @@ namespace Mwall
                 lbArr[i] = l;
             }
         }
+
+        //public bool Clean()
+        //{
+            //return true;
+        //}
 
         public override int Draw()
         {

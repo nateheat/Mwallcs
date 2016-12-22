@@ -15,3 +15,13 @@ Branch: master
 Add the devlog.wiki to ./doc/
 
 
+=== 12/22/2016 ===
+
+Branch: develop
+
+MScreen:
+* Add a static list to hold the MScreen objects
+* Add Clean() and Regen()
+
+Now after the setting was changed, the application will restart matrix display with the new setting.
+

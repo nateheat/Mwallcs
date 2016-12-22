@@ -26,26 +26,33 @@ namespace Mwall
     public partial class MainWindow : Window
     {
         private DispatcherTimer refreshTimer = new DispatcherTimer();
-        private List<MColumn> columnList = new List<MColumn>();
+        //private List<MColumn> columnList = new List<MColumn>();
+        private MScreen mscreen;
+
+        const int SUPPOSED_COLUMN_WIDTH = 25;
 
         public MainWindow()
         {
             InitializeComponent();
-            //Rectangle rect = Screen.PrimaryScreen.Bounds;
-            int width = Convert.ToInt32(System.Windows.SystemParameters.PrimaryScreenWidth);
-            int height = Convert.ToInt32(System.Windows.SystemParameters.PrimaryScreenHeight);
-            //int height = System.Windows.Forms.SystemInformation.VirtualScreen.Height;
-            //MessageBox.Show(height.ToString());
-            //Screen.FromControl(BackCanv);
-            //ScrHeight = height;
-            
 
-            columnList.Add(new MColumn("abcdefghijklmnopqrstuvwxyz", new Point(200, 0), 20, 25, height, 9, 1, BackCanv));
-            columnList.Add(new MColumn("0123456789", new Point(100, 0), 20, 25, height, 8, 3, BackCanv));
+            MConfig mcf = MConfig.GetInstance();
 
+            mscreen = new MScreen(BackCanv);
+            switch (mcf.Style)
+            {
+                case MWStyle.Comet:
+                    mscreen.GenerateCometColumns();
+                    break;
+                case MWStyle.Straight:
+                    mscreen.GenerateStraightColumns();
+                    break;
+                default:
+                    break;
+            }
+             
             refreshTimer = new System.Windows.Threading.DispatcherTimer();
             refreshTimer.Tick += new EventHandler(dispatcherTimer_Tick);
-            refreshTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
+            refreshTimer.Interval = new TimeSpan(0, 0, 0, 0, 800);
             refreshTimer.Start();
 
             new ExitButtonWindows().Show();
@@ -65,15 +72,14 @@ namespace Mwall
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-            //Debug.WriteLine("Ticking");
-            foreach (MColumn col in columnList)
-            {
-                col.Draw();
-            }
+            mscreen.Draw();
         }
 
     }
 
+    /// <summary>
+    /// provide the API for allowing click through of the window
+    /// </summary>
     public static class WindowsServices
     {
       const int WS_EX_TRANSPARENT = 0x00000020;

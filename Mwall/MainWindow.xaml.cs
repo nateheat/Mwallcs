@@ -35,20 +35,23 @@ namespace Mwall
         {
             InitializeComponent();
 
-            MConfig mcf = MConfig.GetInstance();
-
             mscreen = new MScreen(BackCanv);
-            switch (mcf.Style)
-            {
-                case MWStyle.Comet:
-                    mscreen.GenerateCometColumns();
-                    break;
-                case MWStyle.Straight:
-                    mscreen.GenerateStraightColumns();
-                    break;
-                default:
-                    break;
-            }
+            mscreen.GenerateColumns();
+
+            //MConfig mcf = MConfig.GetInstance();
+
+            //mscreen = new MScreen(BackCanv);
+            //switch (mcf.Style)
+            //{
+                //case MWStyle.Comet:
+                    //mscreen.GenerateCometColumns();
+                    //break;
+                //case MWStyle.Straight:
+                    //mscreen.GenerateStraightColumns();
+                    //break;
+                //default:
+                    //break;
+            //}
              
             refreshTimer = new System.Windows.Threading.DispatcherTimer();
             refreshTimer.Tick += new EventHandler(dispatcherTimer_Tick);
@@ -57,6 +60,7 @@ namespace Mwall
 
             new ExitButtonWindows().Show();
         }
+
 
         /// <summary>
         /// Set the windows's controls not clickable etc (more than transparent, right?)

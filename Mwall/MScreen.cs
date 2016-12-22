@@ -12,11 +12,22 @@ namespace Mwall
     /// It represents the display screen of the monitor, currently only supports the main screen of the PC.
     /// MScreen also hold the references of the MColumn which need to be updated (or draw) on specific "tick".
     /// </summary>
-    class MScreen
+    public class MScreen
     {
+        private static List<MScreen> lms = new List<MScreen>();
+        public static bool ReGen()
+        {
+            foreach (MScreen scr in lms)
+            {
+                scr.CleanColumns();
+                scr.GenerateColumns();
+            }
+            return true;
+        }
+
         public static Random random = new Random();
         public const int MAX_CYCLE = 100;
-        public List<MColumn>[] ArrCycleList = new List<MColumn>[MAX_CYCLE];
+        internal List<MColumn>[] ArrCycleList = new List<MColumn>[MAX_CYCLE];
         private double width, height;
         private Canvas canv;
         private int cur; // the ticking cursor
@@ -32,8 +43,28 @@ namespace Mwall
             width = System.Windows.SystemParameters.PrimaryScreenWidth;
             height = System.Windows.SystemParameters.PrimaryScreenHeight;
             canv = canvas;
-            for(int i = 0; i < MAX_CYCLE; i++) ArrCycleList[i] = new List<MColumn>();
+            //for(int i = 0; i < MAX_CYCLE; i++) ArrCycleList[i] = new List<MColumn>();
+            for(int i = 0; i < ArrCycleList.Length; i++) ArrCycleList[i] = new List<MColumn>();
             cur = 0;
+            if (!lms.Contains(this)) lms.Add(this);
+        }
+
+        public bool GenerateColumns()
+        {
+            MConfig mcf = MConfig.GetInstance();
+            switch (mcf.Style)
+            {
+                case MWStyle.Comet:
+                    this.GenerateCometColumns();
+                    break;
+                case MWStyle.Straight:
+                    this.GenerateStraightColumns();
+                    break;
+                default:
+                    break;
+            }
+            return true;
+
         }
 
         public int GenerateCometColumns()
@@ -79,6 +110,15 @@ namespace Mwall
             cur = (cur >= MAX_CYCLE - 1)? 0 : cur + 1;
             foreach(MColumn mc in ArrCycleList[cur]) { mc.Draw(); }
             return 0;
+        }
+
+        public bool CleanColumns()
+        {
+            canv.Children.Clear();
+            for (int i = 0; i < ArrCycleList.Length; i++)
+                ArrCycleList[i] = new List<MColumn>();
+
+            return true;
         }
 
 

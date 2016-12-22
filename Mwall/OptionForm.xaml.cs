@@ -67,6 +67,7 @@ namespace Mwall
         private void buttonOK_Click(object sender, RoutedEventArgs e)
         {
             MConfig.GetInstance().SaveConfig();
+            MScreen.ReGen();
             DialogResult = true;
         }
 

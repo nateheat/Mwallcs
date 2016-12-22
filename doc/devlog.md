@@ -1,21 +1,21 @@
-== Change List ==
+# Change List
 
 Matrix C# version
 
-=== 12/16/2016 ===
+## 12/16/2016
 
 Branch: feat-verticalTB
 Refactor MColumnCls to MColumnComet
 Refactor MColumnVert to MColumnStraight
 
 
-=== 12/18/2016 ===
+## 12/18/2016
 
 Branch: master
 Add the devlog.wiki to ./doc/
 
 
-=== 12/22/2016 ===
+## 12/22/2016
 
 Branch: develop
 
@@ -25,3 +25,5 @@ MScreen:
 
 Now after the setting was changed, the application will restart matrix display with the new setting.
 
+**Commit 2** :
+change devlop.wiki to devlop.md

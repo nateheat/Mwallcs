@@ -17,7 +17,7 @@
             </StackPanel>
         </GroupBox>
         <StackPanel Orientation="Horizontal" Margin="14,146,303,92">
-            <ComboBox x:Name="comboBoxFontSize" Width="74" Loaded="comboBoxFontSize_Loaded" SelectionChanged="comboBoxFontSize_SelectionChanged" IsEditable="false" SelectedValue="{Binding Path=FSize, Mode=TwoWay}"/>
+            <ComboBox x:Name="comboBoxFontSize" Width="74" Loaded="comboBoxFontSize_Loaded" IsEditable="false" SelectedValue="{Binding Path=FSize, Mode=TwoWay}"/>
             <Button x:Name="cmdUp" x:FieldModifier="private" Margin="5,0,0,0" Content="˄" Width="20" Click="cmdUp_Click" />
             <Button x:Name="cmdDown" x:FieldModifier="private"  Content="˅" Width="20" Click="cmdDown_Click" />
         </StackPanel>

@@ -49,19 +49,6 @@ namespace Mwall
 
             // ... Assign the ItemsSource to the List.
             comboBox.ItemsSource = data;
-
-            //comboBox.SelectedIndex = 2;
-        }
-
-        private void comboBoxFontSize_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //// ... Get the ComboBox.
-            //var comboBox = sender as ComboBox;
-
-            //// ... Set SelectedItem as Window Title.
-            ////string value = comboBox.SelectedItem as string;
-            //string value = comboBox.SelectedItem.ToString();
-            //this.Title = "Selected: " + value;
         }
 
         private void buttonOK_Click(object sender, RoutedEventArgs e)
@@ -123,7 +110,6 @@ namespace Mwall
         public MWStyle Style
         {
             get { return style; }
-            //set { style = value; FSize = FSize + 1;  }
             set { style = value; NotifyPropertyChanged("Style"); }
         }
 

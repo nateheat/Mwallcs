@@ -15,8 +15,6 @@ namespace Mwall
     {
        
         int Draw();
-
-        //bool Clean();
     }
 
     abstract class MColumnBase : MColumn
@@ -45,42 +43,23 @@ namespace Mwall
         }
 
         public abstract int Draw();
-        //public abstract int Clean();
     }
 
     class MColumnComet : MColumnBase
     {
-        //string textSet; // the possible char set that appear in the column
-        //Point startPoint; // the starting point coordination on the screen
-        //Single fontSize; 
         int verticalDist; // the space between two characters vertically
 
-        //int scrHeight; // the screen's height in pixel
         double columnHeight; // the column's height is screen height + current displaying text's (labels') height
 
-        ////int tickCount; // the update frequency of this column
-        ////int intervalCount; // the counter for frequency control
         int len; // how many characters to be shown simultaneously
         int cursor; // the cursor for which label is at the bottom of the column
-        //Canvas canv; // store the canvas where the labels to be drawn
-        //public static Random rd = new Random();
         Label[] lbArr; // the label array
         double[] opacityArr; // control the opacity for each label in the column
-        //static int lcmHeight = 1;
-
-        //public static string[] PRETEXT = new string[] { "01", "0123456789",
-        //    "abcdefghijklmnopqrstuvwxyz", "ABCDEFGHIJKLMNOPQRSTUVWXYZ",  
-        //    "abcdefghijklmnopqrstuvwxyz0123456789", "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
-        //    "abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-=_+", "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
-        //    "abcdefghijklmnopqrstuvwxyz0123456789{}[]\\|<>?/~", "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789{}[]\\|<>?/~",
-        //    "!@#$%^&*()-=_+", "{}[]\\|<>?/~", "0123456789!@#$%^&*()-=_+{}[]\\|<>?/~"};
- 
 
         public MColumnComet(Point StartPoint, float FontSize, double ScreenHeight, Canvas BackgroundCanvas, string TextSet, int LenCount, int VerticalDistance = 0)
             : base(StartPoint, FontSize, ScreenHeight, BackgroundCanvas, TextSet)
         {
             len = LenCount;
-            //if(0 == VerticalDistance)
             verticalDist = (0 == VerticalDistance) ? (int)Math.Ceiling(FontSize): VerticalDistance;
             columnHeight = ScreenHeight + VerticalDistance * len;
             cursor = len - 1;
@@ -107,11 +86,6 @@ namespace Mwall
             }
         }
 
-        //public bool Clean()
-        //{
-            //return true;
-        //}
-
         public override int Draw()
         {
             cursor = (cursor + 1) % len;
@@ -119,8 +93,6 @@ namespace Mwall
             mlb.Content = textSet.Substring(rd.Next(textSet.Length),1);
             double oldx = mlb.Margin.Left;
             double oldy = mlb.Margin.Top;
-            //mlb.Margin = new Thickness(startPoint.X, (startPoint.Y + (tickCount / intervalCount + len - 1) * verticalDist) % scrHeight, 0, 0);
-            //mlb.Margin = new Thickness(oldx, (oldy + len * verticalDist) % scrHeight, 0, 0);
             mlb.Margin = new Thickness(oldx, (oldy + len * verticalDist) % columnHeight, 0, 0);
             mlb.Opacity = opacityArr[len - 1];
             for(int j = 1; j < len; j++)
@@ -128,16 +100,13 @@ namespace Mwall
                 int i = (cursor + j) % len;
                 Label clb = lbArr[i];
                 clb.Opacity = opacityArr[j - 1];
-                //if(3 == j) clb.Content = textSet.Substring(rd.Next(textSet.Length),1);
-                //clb.Margin = new Thickness(startPoint.X, startPoint.Y + (tickCount / intervalCount + j) * verticalDist, 0, 0);
-
             }
             return 0;
         }
     }
 
 
-    class MColumnVert : MColumnBase
+    class MColumnStraight : MColumnBase
     {
         enum State
         {
@@ -152,9 +121,8 @@ namespace Mwall
         int fadingTurn;
 
         Label label;
-        //double curHeight; // the label's bottom height
 
-        public MColumnVert(Point StartPoint, float FontSize, double ScreenHeight, Canvas BackgroundCanvas, string TextSet, int FadingTurn = 8, int SilenceTurn = 4)
+        public MColumnStraight(Point StartPoint, float FontSize, double ScreenHeight, Canvas BackgroundCanvas, string TextSet, int FadingTurn = 8, int SilenceTurn = 4)
             : base(StartPoint, FontSize, ScreenHeight, BackgroundCanvas, TextSet)
         {
             fadingTurn = FadingTurn;
@@ -163,7 +131,6 @@ namespace Mwall
             label.Content = textSet.Substring(rd.Next(textSet.Length),1) + Environment.NewLine;
             label.FontSize = fontSize;
             label.Foreground = new SolidColorBrush(Colors.ForestGreen);
-            //label.Width = fontSize;
             label.HorizontalAlignment = HorizontalAlignment.Center;
             label.Margin = new Thickness(startPoint.X, startPoint.Y, 0, 0);
             BackgroundCanvas.Children.Add(label);

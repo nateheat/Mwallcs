@@ -26,7 +26,6 @@ namespace Mwall
     public partial class MainWindow : Window
     {
         private DispatcherTimer refreshTimer = new DispatcherTimer();
-        //private List<MColumn> columnList = new List<MColumn>();
         private MScreen mscreen;
 
         const int SUPPOSED_COLUMN_WIDTH = 25;
@@ -38,21 +37,6 @@ namespace Mwall
             mscreen = new MScreen(BackCanv);
             mscreen.GenerateColumns();
 
-            //MConfig mcf = MConfig.GetInstance();
-
-            //mscreen = new MScreen(BackCanv);
-            //switch (mcf.Style)
-            //{
-                //case MWStyle.Comet:
-                    //mscreen.GenerateCometColumns();
-                    //break;
-                //case MWStyle.Straight:
-                    //mscreen.GenerateStraightColumns();
-                    //break;
-                //default:
-                    //break;
-            //}
-             
             refreshTimer = new System.Windows.Threading.DispatcherTimer();
             refreshTimer.Tick += new EventHandler(dispatcherTimer_Tick);
             refreshTimer.Interval = new TimeSpan(0, 0, 0, 0, 800);

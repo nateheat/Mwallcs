@@ -5,13 +5,15 @@ Matrix C# version
 ## 12/16/2016
 
 Branch: feat-verticalTB
-Refactor MColumnCls to MColumnComet
-Refactor MColumnVert to MColumnStraight
+
+* Refactor MColumnCls to MColumnComet
+* Refactor MColumnVert to MColumnStraight
 
 
 ## 12/18/2016
 
 Branch: master
+
 Add the devlog.wiki to ./doc/
 
 
@@ -27,3 +29,10 @@ Now after the setting was changed, the application will restart matrix display w
 
 **Commit 2** :
 change devlop.wiki to devlop.md
+
+
+## 12/23/2016
+
+Branch::develop
+
+Clean the code and minor refactoring. Also push to Branch::master.

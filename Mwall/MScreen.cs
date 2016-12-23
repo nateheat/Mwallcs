@@ -38,12 +38,9 @@ namespace Mwall
         /// <param name="canvas">the canvas to be drawn on</param>
         public MScreen(Canvas canvas)
         {
-            //width = Convert.ToInt32(System.Windows.SystemParameters.PrimaryScreenWidth);
-            //height = Convert.ToInt32(System.Windows.SystemParameters.PrimaryScreenHeight);
             width = System.Windows.SystemParameters.PrimaryScreenWidth;
             height = System.Windows.SystemParameters.PrimaryScreenHeight;
             canv = canvas;
-            //for(int i = 0; i < MAX_CYCLE; i++) ArrCycleList[i] = new List<MColumn>();
             for(int i = 0; i < ArrCycleList.Length; i++) ArrCycleList[i] = new List<MColumn>();
             cur = 0;
             if (!lms.Contains(this)) lms.Add(this);
@@ -98,7 +95,7 @@ namespace Mwall
                 string str = MColumnBase.PRETEXT[random.Next(MColumnBase.PRETEXT.Length)];
                 int startingX = i * colWidth + random.Next(colWidth)/2 - colWidth / 4;
                 int rndinterval = random.Next(9) + 1;
-                MColumn mc = new MColumnVert(new Point(startingX, 0), fsize, height, canv, str);
+                MColumn mc = new MColumnStraight(new Point(startingX, 0), fsize, height, canv, str);
                 for(int j = 1; j < MAX_CYCLE; j++) 
                     if (0 == j % rndinterval) ArrCycleList[j].Add(mc);
             } 

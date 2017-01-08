@@ -66,8 +66,9 @@ namespace Mwall
 
         public int GenerateCometColumns()
         {
-            float fsize = MConfig.GetInstance().FSize;
-            int colWidth = (int)Math.Ceiling(fsize) + 5;
+            MConfig conf = MConfig.GetInstance();
+            float fsize = conf.FSize;
+            int colWidth = (int)Math.Ceiling(fsize) + conf.ColumnGap;
 
             for(int i = 0; i < width/colWidth; i++)
             {
@@ -87,8 +88,9 @@ namespace Mwall
 
         public int GenerateStraightColumns()
         {
-            float fsize = MConfig.GetInstance().FSize;
-            int colWidth = (int)Math.Ceiling(fsize) + 5;
+            MConfig conf = MConfig.GetInstance();
+            float fsize = conf.FSize;
+            int colWidth = (int)Math.Ceiling(fsize) + conf.ColumnGap;
 
             for(int i = 0; i < width/colWidth; i++)
             {

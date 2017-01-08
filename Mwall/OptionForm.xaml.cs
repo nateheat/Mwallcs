@@ -105,8 +105,11 @@ namespace Mwall
 
         public const MWStyle DEFAULT_STYLE = MWStyle.Straight;
         public const float DEFAULT_FONTSIZE = 20;
+        public const int DEFAULT_COLUMNGAP = 5;
+
         public MWStyle style;
         public float fsize;
+        public int columngap;
         public MWStyle Style
         {
             get { return style; }
@@ -119,6 +122,12 @@ namespace Mwall
             set { fsize = value; NotifyPropertyChanged("FSize"); }
         }
 
+        public int ColumnGap
+        {
+            get { return columngap; }
+            set { columngap = value; NotifyPropertyChanged("ColumnGap"); }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         private MConfig()
@@ -128,6 +137,7 @@ namespace Mwall
             {
                 style = DEFAULT_STYLE;
                 fsize = DEFAULT_FONTSIZE;
+                columngap = DEFAULT_COLUMNGAP;
             }
         }
 
@@ -148,6 +158,11 @@ namespace Mwall
                 kv = appsettings["FontSize"];
                 if (null == kv || !float.TryParse(kv.Value, out fsize))
                     fsize = DEFAULT_FONTSIZE;
+
+                // if not defined "FontSize", set it to default
+                kv = appsettings["ColumnGap"];
+                if (null == kv || !int.TryParse(kv.Value, out columngap))
+                    columngap = DEFAULT_COLUMNGAP;
             }
             catch (Exception e)
             {
@@ -168,6 +183,10 @@ namespace Mwall
 
                 if (appsettings.AllKeys.Contains("FontSize")) appsettings["FontSize"].Value = fsize.ToString();
                 else appsettings.Add("FontSize", fsize.ToString());
+
+                if (appsettings.AllKeys.Contains("ColumnGap")) appsettings["ColumnGap"].Value = columngap.ToString();
+                else appsettings.Add("ColumnGap", columngap.ToString());
+
                 config.Save(ConfigurationSaveMode.Full);
             }
             catch (Exception e)

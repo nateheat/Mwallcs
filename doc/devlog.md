@@ -36,3 +36,9 @@ change devlop.wiki to devlop.md
 Branch::develop
 
 Clean the code and minor refactoring. Also push to Branch::master.
+
+## 01/09/2017
+
+Branch::develop, master
+
+Add a slider to configure the gap between the columns.

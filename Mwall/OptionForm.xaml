@@ -5,28 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Mwall"
         mc:Ignorable="d"
-        Title="OptionForm" Height="300" Width="482.967">
+        Title="OptionForm" Height="300" Width="482.967" ResizeMode="NoResize">
     <Window.Resources>
         <local:EBConverter x:Key="syConverter" />
     </Window.Resources>
-    <Grid x:Name="MainGrid">
-        <GroupBox x:Name="groupBox" Header="Column Style" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="102" Width="158">
+    <Grid x:Name="MainGrid" Background="Black">
+        <GroupBox x:Name="groupBox" Header="Column Style" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="102" Width="158" Foreground="#FF37EC47">
             <StackPanel>
-                <RadioButton x:Name="radioButtonStraight" Content="Straight" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" IsChecked="{Binding Path=Style, Converter={StaticResource syConverter}, ConverterParameter={x:Static local:MWStyle.Straight}}"/>
-                <RadioButton x:Name="radioButtonComet" Content="Comet" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" IsChecked="{Binding Path=Style, Converter={StaticResource syConverter}, ConverterParameter={x:Static local:MWStyle.Comet}}"/>
+                <RadioButton x:Name="radioButtonStraight" Content="Straight" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" IsChecked="{Binding Path=Style, Converter={StaticResource syConverter}, ConverterParameter={x:Static local:MWStyle.Straight}}" Foreground="#FF37EC47"/>
+                <RadioButton x:Name="radioButtonComet" Content="Comet" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" IsChecked="{Binding Path=Style, Converter={StaticResource syConverter}, ConverterParameter={x:Static local:MWStyle.Comet}}" Foreground="#FF37EC47"/>
             </StackPanel>
         </GroupBox>
         <StackPanel Orientation="Horizontal" Margin="14,146,303,0" Height="27" VerticalAlignment="Top">
             <ComboBox x:Name="comboBoxFontSize" Width="74" Loaded="comboBoxFontSize_Loaded" IsEditable="false" SelectedValue="{Binding Path=FSize, Mode=TwoWay}"/>
-            <Button x:Name="cmdUp" x:FieldModifier="private" Margin="5,0,0,0" Content="˄" Width="20" Click="cmdUp_Click" />
-            <Button x:Name="cmdDown" x:FieldModifier="private"  Content="˅" Width="20" Click="cmdDown_Click" />
+            <Button x:Name="cmdUp" x:FieldModifier="private" Margin="5,0,0,0" Content="˄" Width="20" Click="cmdUp_Click" Background="#FF4E7646" />
+            <Button x:Name="cmdDown" x:FieldModifier="private"  Content="˅" Width="20" Click="cmdDown_Click" Background="#FF4E7646" />
         </StackPanel>
 
-        <Button x:Name="buttonOK" Content="_OK" HorizontalAlignment="Left" Margin="377,25,0,0" VerticalAlignment="Top" Width="75" Click="buttonOK_Click"/>
-        <Button x:Name="buttonCancel" Content="_Cancel" HorizontalAlignment="Left" Margin="377,60,0,0" VerticalAlignment="Top" Width="75" Click="buttonCancel_Click"/>
-        <Label x:Name="labelFontSize" Content="Font Size" HorizontalAlignment="Left" Margin="10,117,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="labelColumnGap" Content="Space between columns" HorizontalAlignment="Left" Margin="10,184,0,0" VerticalAlignment="Top"/>
-        <Slider x:Name="sliderColumnGap" HorizontalAlignment="Left" Margin="14,215,0,0" VerticalAlignment="Top" Width="154" Maximum="20" TickPlacement="BottomRight" TickFrequency="3" Value="{Binding ColumnGap, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <Button x:Name="buttonOK" Content="_OK" HorizontalAlignment="Left" Margin="377,25,0,0" VerticalAlignment="Top" Width="75" Click="buttonOK_Click" Foreground="#FF37EC47" Background="#FF4E7646"/>
+        <Button x:Name="buttonCancel" Content="_Cancel" HorizontalAlignment="Left" Margin="377,60,0,0" VerticalAlignment="Top" Width="75" Click="buttonCancel_Click" Foreground="#FF37EC47" Background="#FF4E7646"/>
+        <Label x:Name="labelFontSize" Content="Font Size" HorizontalAlignment="Left" Margin="10,117,0,0" VerticalAlignment="Top" Foreground="#FF37EC47"/>
+        <Label x:Name="labelColumnGap" Content="Space between columns" HorizontalAlignment="Left" Margin="10,184,0,0" VerticalAlignment="Top" Foreground="#FF37EC47"/>
+        <Slider x:Name="sliderColumnGap" HorizontalAlignment="Left" Margin="14,215,0,0" VerticalAlignment="Top" Width="154" Maximum="20" TickPlacement="BottomRight" TickFrequency="3" Value="{Binding ColumnGap, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Background="#00000000"/>
 
     </Grid>
 </Window>

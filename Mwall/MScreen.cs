@@ -67,13 +67,14 @@ namespace Mwall
         public int GenerateCometColumns()
         {
             MConfig conf = MConfig.GetInstance();
-            float fsize = conf.FSize;
-            int colWidth = (int)Math.Ceiling(fsize) + conf.ColumnGap;
+            int fvar = (int)conf.FSize;
+            int colWidth = fvar + conf.ColumnGap;
 
             for(int i = 0; i < width/colWidth; i++)
             {
                 string str = MColumnBase.PRETEXT[random.Next(MColumnBase.PRETEXT.Length)];
-                int startingX = i * colWidth + random.Next(colWidth)/2 - colWidth / 4;
+                int startingX = i * colWidth + random.Next(colWidth) / 2 - colWidth / 4;
+                float fsize = conf.FSize + random.Next(fvar) / 3 - fvar / 6;
                 int verticalGap = random.Next(10);
                 int rndinterval = random.Next(8) + 1;
                 int rndlen = random.Next(12) + 5;
@@ -89,13 +90,14 @@ namespace Mwall
         public int GenerateStraightColumns()
         {
             MConfig conf = MConfig.GetInstance();
-            float fsize = conf.FSize;
-            int colWidth = (int)Math.Ceiling(fsize) + conf.ColumnGap;
+            int fvar = (int)conf.FSize;
+            int colWidth = fvar + conf.ColumnGap;
 
             for(int i = 0; i < width/colWidth; i++)
             {
                 string str = MColumnBase.PRETEXT[random.Next(MColumnBase.PRETEXT.Length)];
-                int startingX = i * colWidth + random.Next(colWidth)/2 - colWidth / 4;
+                int startingX = i * colWidth + random.Next(colWidth) / 2 - colWidth / 4;
+                float fsize = conf.FSize + random.Next(fvar) / 3 - fvar / 6;
                 int rndinterval = random.Next(9) + 1;
                 MColumn mc = new MColumnStraight(new Point(startingX, 0), fsize, height, canv, str);
                 for(int j = 1; j < MAX_CYCLE; j++) 

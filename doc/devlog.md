@@ -42,3 +42,9 @@ Clean the code and minor refactoring. Also push to Branch::master.
 Branch::develop, master
 
 Add a slider to configure the gap between the columns.
+
+## 01/17/2017
+
+Branch::develop
+
+Tried to add random on the font size.  Seems there is problem on it.  #pending.

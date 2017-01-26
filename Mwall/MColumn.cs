@@ -74,7 +74,7 @@ namespace Mwall
             {
                 Label l = new Label();
                 l.Content = textSet.Substring(rd.Next(textSet.Length),1);
-                l.FontSize = fontSize;
+                l.FontSize = FontSize;
                 l.Foreground = new SolidColorBrush(Colors.ForestGreen);
                 BlurEffect b = new BlurEffect();
                 b.Radius = 2;
@@ -129,7 +129,8 @@ namespace Mwall
             silenceTurn = SilenceTurn;
             label = new Label();
             label.Content = textSet.Substring(rd.Next(textSet.Length),1) + Environment.NewLine;
-            label.FontSize = fontSize;
+            label.FontSize = FontSize;
+
             label.Foreground = new SolidColorBrush(Colors.ForestGreen);
             label.HorizontalAlignment = HorizontalAlignment.Center;
             label.Margin = new Thickness(startPoint.X, startPoint.Y, 0, 0);

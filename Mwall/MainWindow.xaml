@@ -5,6 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Mwall"
         mc:Ignorable="d"
-        Title="Mwall" Height="545.502" Width="814.226" Topmost="True" WindowState="Maximized" AllowsTransparency="True" WindowStyle="None" Background="{x:Null}">
+        Title="Mwall" Height="545.502" Width="814.226" Topmost="True" WindowState="Maximized" AllowsTransparency="True" WindowStyle="None" Background="{x:Null}" ResizeMode="NoResize">
     <Canvas x:Name="BackCanv" Margin="0,0,0,0"/>
 </Window>

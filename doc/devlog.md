@@ -48,3 +48,12 @@ Add a slider to configure the gap between the columns.
 Branch::develop
 
 Tried to add random on the font size.  Seems there is problem on it.  #pending.
+
+
+## 01/26/2017
+
+Branch::develop
+
+Start using randomized font size modification for each column.
+
+Change the OptionForm's style to green text on black background.
